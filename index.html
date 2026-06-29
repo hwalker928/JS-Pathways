@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Pathways Collective</title>
+
+<style>
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: #f5f5f5;
+
+        /* NEW PREMIUM BACKGROUND */
+        background: linear-gradient(rgba(11,28,44,0.95), rgba(11,28,44,0.98)),
+                    url("0d44c14d-2f44-4a7b-a41b-43ebd784a8f9.jpg") center / cover no-repeat fixed;
+    }
+
+    h1, h2 {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-weight: normal;
+    }
+
+    /* TOP BAR */
+    .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px 0; /* remove horizontal padding */
+
+        display: flex;
+        justify-content: center; /* centre inner container */
+
+        background: rgba(11, 28, 44, 0);
+
+        z-index: 1000;
+    }
+
+    /* INNER WRAPPER (keeps alignment consistent with page) */
+    .topbar-inner {
+        width: 100%;
+        max-width: 1400px; /* match your .container */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px; /* equal spacing left/right */
+    }
+
+    /* TICKER CONTAINER */
+    .ticker {
+        overflow: hidden;
+        white-space: nowrap;
+        flex: 1; /* takes available space between buttons */
+        margin: 0 20px;
+
+        background: #d4a24c;
+        border-radius: 20px;
+        padding: 8px 0;
+    }
+
+    /* MOVING TEXT */
+    .ticker-track {
+        display: inline-block;
+        padding-left: 100%;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #0b1c2c;
+
+        animation: ticker-scroll 40s linear infinite;
+    }
+
+    /* ANIMATION */
+    @keyframes ticker-scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .ticker:hover .ticker-track {
+        animation-play-state: paused;
+    }
+
+
+    /* BUTTON BASE */
+    .nav-btn {
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+
+        transition: all 0.3s ease;
+    }
+
+    /* BOOK NOW (left) */
+    .book {
+        background: #d4a24c;
+        color: #0b1c2c;
+    }
+
+    .book:hover {
+        background: #e6b85c;
+        transform: translateY(-2px);
+    }
+
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        text-align: center;
+        color: #ffffff;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+
+        opacity: 0.8;
+
+        animation: bounce 2.5s ease-in-out infinite;
+    }
+
+
+    .card h3 {
+        color: #d4a24c;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-weight: normal;
+    }
+
+    .card p {
+        line-height: 1.8;
+    }
+
+
+    /* ARROW */
+    .arrow {
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
+
+        border-left: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
+
+        transform: rotate(-45deg);
+
+    }
+
+    /* ANIMATION */
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(8px);
+        }
+    }
+
+    /* CONTACT (right) */
+    .contact {
+        border: 1px solid #d4a24c;
+        color: #d4a24c;
+    }
+
+    .contact:hover {
+        background: #d4a24c;
+        color: #0b1c2c;
+        transform: translateY(-2px);
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 60px 20px;
+
+        /* Animation base */
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+    }
+
+    .container.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* HERO */
+    .hero {
+	position: relative;
+        background: linear-gradient(
+            rgba(11, 28, 44, 0.4),
+            rgba(11, 28, 44, 0.5)
+        ),
+        url("Cover_photo.png") center / cover no-repeat;
+
+        height: 90vh; /* full screen feel */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        position: relative;
+}
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .highlight {
+        color: #d4a24c;
+    }
+
+    .hero-services {
+        margin-top: 20px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        line-height: 1.6;
+
+        color: #d4a24c; /* gold accent */
+        opacity: 0.9;
+
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    /* CARDS */
+    .card {
+        background: rgba(18, 40, 61, 0.85);
+        border-left: 4px solid #d4a24c;
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 10px;
+        backdrop-filter: blur(8px);
+
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    li {
+        margin-bottom: 12px;
+    }
+
+    strong {
+        color: #d4a24c;
+    }
+
+    /* PROFILE */
+    .profile {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .profile img {
+        width: 260px;
+        border-radius: 50%; /* makes it modern */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+
+        transition: transform 0.4s ease;
+    }
+
+    .profile img:hover {
+        transform: scale(1.05);
+    }
+
+    .profile-text h2 {
+        font-size: 2rem;
+    }
+
+    .role {
+        color: #d4a24c;
+        font-weight: bold;
+    }
+
+    /* CTA */
+    .cta {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .btn {
+        background: #d4a24c;
+        color: #0b1c2c;
+        padding: 14px 28px;
+        border-radius: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #e6b85c;
+        transform: translateY(-3px) scale(1.05);
+    }
+
+    .profile {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    /* LEFT SIDE (image + name under it) */
+    .profile-left {
+        text-align: center;
+    }
+
+    .profile-left img {
+        width: 240px;
+        border-radius: 50%;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        margin-bottom: 15px;
+    }
+
+    .profile-left h2 {
+        margin: 0;
+        font-size: 1.6rem;
+    }
+
+    /* RIGHT SIDE (text beside image) */
+    .profile-right {
+        max-width: 500px;
+    }
+
+    .role {
+        color: #d4a24c;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+</style>
+</head>
+
+<body>
+<!-- TOP NAV -->
+<div class="topbar">
+    <div class="topbar-inner">
+
+        <a href="https://calendar.app.google/Xrd1Udv87CqfHA97A" class="nav-btn book" target="_blank">Book Now</a>
+
+
+
+        <!--  SCROLLING TEXT -->
+        <div class="ticker">
+            <div class="ticker-track">
+                Careers Coaching &amp; Confidence Building | Early Careers Support | Leadership &amp; Management Development | Apprenticeship Programme Support
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Careers Coaching &amp; Confidence Building | Early Careers Support | Leadership &amp; Management Development | Apprenticeship Programme Support
+            </div>
+        </div>
+
+        <a href="mailto:Js.pathways.collective@gmail.com" class="nav-btn contact">
+            ✉ Contact
+        </a>
+
+    </div>
+</div>
+
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <h1>
+            JS <span class="highlight">Pathways</span> Collective
+        </h1>
+        <p>
+            With 18 years of Learning &amp; Development experience in a large, fast‑paced food manufacturing business, 
+            we help individuals and organisations unlock their full potential.
+        </p>
+	<p class="hero-services">
+        Careers Coaching &amp; Confidence Building | 
+        Early Careers Support | 
+        Leadership &amp; Management Development | 
+        Apprenticeship Programme Support
+        </p>
+
+
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll down</span>
+        <div class="arrow"></div>
+    </div>    
+</section>
+
+<!-- SERVICES -->
+<div class="container">
+    <div class="card">
+        <h2>Services</h2>
+        <ul>
+            <li><strong>Career Coaching &amp; Confidence Building</strong> – gain clarity, overcome challenges and move forward with confidence.</li>
+            <li><strong>Early Careers Support</strong> – guide apprentices and graduates to succeed and grow.</li>
+            <li><strong>Leadership &amp; Management Development</strong> – practical, engaging learning that builds capability.</li>
+            <li><strong>Apprenticeship Programme Support</strong> – strengthen structure, compliance and learner experience.</li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- WHAT WE OFFER -->
+<div class="container">
+    <div class="card">
+
+        <h2>What We Offer</h2>
+
+        <h3 class="highlight">Empowering People. Building Capability. Creating Lasting Impact.</h3>
+
+        <p>
+            At <strong>JS Pathways Collective</strong>, we believe people are the driving force behind every successful organisation.
+        </p>
+
+        <p>
+            We partner with individuals, leaders and organisations to unlock potential,
+            strengthen capability and create meaningful, lasting change. Through personalised
+            coaching, leadership development, strategic advisory services and capability uplift initiatives,
+            we help people navigate challenges, embrace opportunities and move forward with confidence.
+        </p>
+
+        <p>
+            Our approach combines real-world experience, practical insight and a commitment to excellence.
+            Every individual and organisation is unique, which is why we never rely on one-size-fits-all
+            solutions. We work alongside our clients to understand their goals, address their challenges,
+            and deliver outcomes that continue creating value long after our engagement has ended.
+        </p>
+
+        <h3>Our Areas of Expertise</h3>
+
+        <ul>
+            <li>Leadership Development</li>
+            <li>Executive &amp; Career Coaching</li>
+            <li>Neurodiversity Coaching</li>
+            <li>Capability Building</li>
+            <li>Team Effectiveness</li>
+            <li>Organisational Transformation</li>
+            <li>Strategic Advisory</li>
+            <li>Change &amp; Growth Enablement</li>
+            <li>Industry Professional Training &amp; Coaching</li>
+        </ul>
+
+        <h3>Our Guiding Principles</h3>
+
+        <ul>
+            <li>
+                <strong>People First</strong><br>
+                We lead with empathy, authenticity and respect, recognising that meaningful change starts with people.
+            </li>
+
+            <li>
+                <strong>Raise the Standard</strong><br>
+                We are committed to excellence, helping individuals and organisations achieve their highest potential.
+            </li>
+
+            <li>
+                <strong>Clarity in Direction</strong><br>
+                We provide practical insights and strategic guidance that create confidence, focus and momentum.
+            </li>
+
+            <li>
+                <strong>Grow Together</strong><br>
+                We build sustainable capability that empowers people, teams and organisations to thrive long into the future.
+            </li>
+        </ul>
+
+        <p>
+            Whether you're developing future leaders, navigating organisational transformation,
+            enhancing team performance or investing in personal growth, we're here to help you
+            create a clear pathway forward.
+        </p>
+
+        <div class="cta">
+            <p class="highlight" style="font-size:1.2rem; margin-bottom:0;">
+                Empowering People. Building Capability. Creating Lasting Impact.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- PROFILE -->
+<div class="container">
+    <div class="profile">
+
+        <!-- LEFT: IMAGE + NAME -->
+        <div class="profile-left">
+            <img src="image.png" alt="Jane Spurden">
+
+           
+        </div>
+
+        <!-- RIGHT: TEXT -->
+        <div class="profile-right">
+	<h2> Jane Spurden </h2>
+	    <a href="mailto:Js.pathways.collective@gmail.com" class="highlight"> Js.pathways.collective@gmail.com </a>
+            <p class="role">Career Specialist @ JS Pathways Collective</p>
+
+            <p>
+                Careers Coach, Programme Facilitation, Apprenticeship Programme Stakeholder Management, 
+                CV Writing, Career Planning, Interview Practice Sessions, Neurodiversity Coach.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="container">
+    <div class="card">
+        <p>
+            If you’d like to explore how I can support you or your organisation, 
+            I offer a free 30‑minute discovery session.
+        </p>
+
+        <div class="cta">
+            <a href="https://calendar.app.google/Xrd1Udv87CqfHA97A" class="btn" target="_blank">Book Now</a>
+        </div>
+    </div>
+</div>
+
+<!-- SCROLL ANIMATION SCRIPT -->
+<script>
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+        }
+    });
+});
+
+document.querySelectorAll('.container').forEach(el => {
+    observer.observe(el);
+});
+</script>
+
+</body>
+</html>
